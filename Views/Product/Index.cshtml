@@ -1,17 +1,14 @@
-﻿<div class="container-fluid mt-4">
+﻿@model IEnumerable<ecommerce_website.Models.Product>
+
+<div class="container-fluid mt-4">
     <div class="row">
         <aside class="col-md-3">
             <div class="bg-white border-end pe-3" style="min-height: 100vh;">
                 <div class="mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h6 class="fw-bold mb-0">Category</h6>
-                        <i class="fas fa-chevron-up text-muted small"></i>
-                    </div>
+                    <h6 class="fw-bold mb-2">Category</h6>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Mobile accessory</a></li>
                         <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Electronics</a></li>
                         <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Smartphones</a></li>
-                        <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Modem tech</a></li>
                         <li><a href="#" class="text-primary text-decoration-none small">See all</a></li>
                     </ul>
                 </div>
@@ -22,14 +19,6 @@
                         <input class="form-check-input" type="checkbox" id="samsung" checked>
                         <label class="form-check-label" for="samsung">Samsung</label>
                     </div>
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="apple" checked>
-                        <label class="form-check-label" for="apple">Apple</label>
-                    </div>
-                    <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="pocco" checked>
-                        <label class="form-check-label" for="pocco">Pocco</label>
-                    </div>
                     <a href="#" class="text-primary text-decoration-none small">See all</a>
                 </div>
             </div>
@@ -37,97 +26,44 @@
 
         <main class="col-md-9">
             <header class="d-flex justify-content-between align-items-center mb-3">
-                <span>6 items found</span>
+                <span>@Model.Count() items found</span>
                 <div class="d-flex align-items-center">
                     <select class="form-select w-auto me-2">
                         <option>Featured</option>
                     </select>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-secondary active"><i class="fas fa-th"></i></button>
-                        <button class="btn btn-outline-secondary"><i class="fas fa-list"></i></button>
-                    </div>
                 </div>
             </header>
 
             <div class="row row-cols-1 row-cols-md-3 g-3">
-                <div class="col">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="d-flex align-items-center justify-content-center p-3" style="height: 180px; background-color: #f8f9fa;">
-                            <img src="~/images/Image/tech/image 85.png" class="img-fluid" style="max-height: 100%;" alt="Product 1">
-                            </div>
-                            <div class="card-body p-2">
-                                <h6 class="mb-1 text-dark fw-bold">$99.50 <span class="text-muted fw-normal small"><del>$1128.00</del></span></h6>
-                                <p class="text-muted mb-2" style="font-size: 0.8rem;">iPhone 11 - Red Edition</p>
-                                <button class="btn btn-outline-primary btn-sm rounded-circle float-end"><i class="far fa-heart"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
+                @foreach (var item in Model)
+                {
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0">
                             <div class="d-flex align-items-center justify-content-center p-3" style="height: 180px; background-color: #f8f9fa;">
-                                <img src="~/images/Image/tech/image 32.png" class="img-fluid" style="max-height: 100%;" alt="Product 2">
+                                <img src="~/@item.ImageName" class="img-fluid" style="max-height: 100%;" alt="@item.Name"
+                                     onerror="this.src='/images/no-image.png';">
                                 </div>
-                                <div class="card-body p-2">
-                                    <h6 class="mb-1 text-dark fw-bold">$99.50 <span class="text-muted fw-normal small"><del>$1128.00</del></span></h6>
-                                    <p class="text-muted mb-2" style="font-size: 0.8rem;">iPhone 12 - Deep Blue</p>
-                                    <button class="btn btn-outline-primary btn-sm rounded-circle float-end"><i class="far fa-heart"></i></button>
+                                <div class="card-body p-2 text-center">
+                                    <h6 class="mb-1 text-dark fw-bold">$@item.Price</h6>
+                                    <p class="text-muted mb-2" style="font-size: 0.8rem;">@item.Name</p>
+                                
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Add to Cart</a>
+                                        <button class="btn btn-outline-danger btn-sm rounded-circle"><i class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    }
+                </div>
 
-                        <div class="col">
-                            <div class="card h-100 shadow-sm border-0">
-                                <div class="d-flex align-items-center justify-content-center p-3" style="height: 180px; background-color: #f8f9fa;">
-                                    <img src="~/images/Image/tech/image 29.png" class="img-fluid" style="max-height: 100%;" alt="Product 3">
-                                    </div>
-                                    <div class="card-body p-2">
-                                        <h6 class="mb-1 text-dark fw-bold">$99.50 <span class="text-muted fw-normal small"><del>$1128.00</del></span></h6>
-                                        <p class="text-muted mb-2" style="font-size: 0.8rem;">Samsung Galaxy S21</p>
-                                        <button class="btn btn-outline-primary btn-sm rounded-circle float-end"><i class="far fa-heart"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="card h-100 shadow-sm border-0">
-                                    <div class="d-flex align-items-center justify-content-center p-3" style="height: 180px; background-color: #f8f9fa;">
-                                        <img src="~/images/Image/tech/image 23.png" class="img-fluid" style="max-height: 100%;" alt="Product 4">
-                                        </div>
-                                        <div class="card-body p-2">
-                                            <h6 class="mb-1 text-dark fw-bold">$99.50</h6>
-                                            <p class="text-muted mb-2" style="font-size: 0.8rem;">Xiaomi Pad 5 Pro</p>
-                                            <button class="btn btn-outline-primary btn-sm rounded-circle float-end"><i class="far fa-heart"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <div class="card h-100 shadow-sm border-0">
-                                        <div class="d-flex align-items-center justify-content-center p-3" style="height: 180px; background-color: #f8f9fa;">
-                                            <img src="~/images/Image/tech/8.png" class="img-fluid" style="max-height: 100%;" alt="Product 5">
-                                            </div>
-                                            <div class="card-body p-2">
-                                                <h6 class="mb-1 text-dark fw-bold">$99.50</h6>
-                                                <p class="text-muted mb-2" style="font-size: 0.8rem;">Canon EOS Camera</p>
-                                                <button class="btn btn-outline-primary btn-sm rounded-circle float-end"><i class="far fa-heart"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="card h-100 shadow-sm border-0">
-                                            <div class="d-flex align-items-center justify-content-center p-3" style="height: 180px; background-color: #f8f9fa;">
-                                                <img src="~/\images/Image/tech/image 34.png" class="img-fluid" style="max-height: 100%;" alt="Product 6">
-                                                </div>
-                                                <div class="card-body p-2">
-                                                    <h6 class="mb-1 text-dark fw-bold">$99.50</h6>
-                                                    <p class="text-muted mb-2" style="font-size: 0.8rem;">Smart Watch Series 7</p>
-                                                    <button class="btn btn-outline-primary btn-sm rounded-circle float-end"><i class="far fa-heart"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </main>
-                            </div>
-                        </div>
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                    </ul>
+                </nav>
+            </main>
+        </div>
+    </div>
