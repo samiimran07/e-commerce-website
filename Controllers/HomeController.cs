@@ -2,6 +2,7 @@ using ecommerce_website.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
+
 namespace ecommerce_website.Controllers
 {
     public class HomeController : Controller
@@ -12,10 +13,7 @@ namespace ecommerce_website.Controllers
         }
 
 
-        public IActionResult Product()
-        {
-            return View();
-        }
+       
 
 
         public IActionResult Details(int id)

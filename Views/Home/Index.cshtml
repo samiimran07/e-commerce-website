@@ -1,8 +1,1062 @@
-﻿@{
+﻿
+
+
+
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
+ <style>
+    /* Global Section Styling */
+    .section-container {
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    /* Trending Banner */
+    .trending-banner {
+        position: relative;
+        height: 350px;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .trending-banner img.main-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+    .trending-content {
+        position: relative;
+        z-index: 2;
+        padding-left: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        background: rgba(255,255,255,0.1);
+    }
+
+    /* Category Left Banner */
+    .banner-side {
+        position: relative;
+        min-height: 250px;
+        overflow: hidden;
+    }
+    .banner-side img.cat-bg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+    }
+    .banner-text {
+        position: absolute; /* Changed: To overlay text on image */
+        z-index: 2;
+        padding: 25px;
+        color: #333;
+        top: 0;
+        left: 0;
+    }
+
+    /* GRID ITEM: Horizontal Layout (Text Left, Image Right) */
+    .grid-item {
+        border-left: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        transition: 0.3s;
+        height: 125px; 
+        display: flex !important; /* Force flex for horizontal layout */
+        align-items: center;      /* Center items vertically */
+        justify-content: space-between;
+        padding: 15px;
+        background: #fff;
+        text-decoration: none;
+    }
+
+    .grid-item:hover { 
+        background-color: #f9f9f9; 
+        transform: none; /* Removed scale to keep layout stable */
+    }
+
+    /* Text Container */
+    .item-info {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        flex-grow: 1; /* Occupy remaining space to push image right */
+    }
+
+    /* Image Container */
+    .item-img-container {
+        width: 80px;
+        height: 80px;
+        flex-shrink: 0; /* Prevent image from shrinking */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .item-img-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    /* OUR EXTRA SERVICES */
+    .services-heading {
+        color: #1C1C1C;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
+
+    .service-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        overflow: visible;
+        transition: all 0.3s ease-in-out;
+        height: 100%;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .service-card img.service-img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    .service-card:hover {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        background-color: #F7FAFC;
+        transform: translateY(-2px);
+    }
+
+    .service-card-body {
+        padding: 20px 20px 25px 20px;
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .service-icon-circle {
+        position: absolute;
+        top: -30px;
+        right: 25px;
+        width: 55px;
+        height: 55px;
+        background-color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border: 1px solid #e0e0e0;
+    }
+
+    .service-icon-circle i {
+        font-size: 20px;
+        color: #0d6efd;
+    }
+
+    .service-text {
+        margin: 0;
+        color: #1C1C1C;
+        font-size: 16px;
+        line-height: 1.4;
+        text-align: left;
+        width: 100%;
+    }
+
+    /* Region Section Styles */
+    .region-heading {
+        color: #1C1C1C;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        margin-top: 40px;
+    }
+
+    .region-card {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .region-card:hover {
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .region-img-box {
+        width: 40px;
+        height: 30px;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .region-img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 2px;
+    }
+
+    .region-name {
+        color: #1C1C1C;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    .region-link {
+        color: #8B96A5;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    /* Newsletter Section Styling */
+    .newsletter-section {
+        background-color: #F7FAFC;
+        padding: 50px 0;
+        text-align: center;
+        border-top: 1px solid #e0e0e0;
+        margin-top: 40px;
+    }
+
+    .newsletter-heading {
+        font-size: 24px;
+        font-weight: bold;
+        color: #1C1C1C;
+        margin-bottom: 5px;
+    }
+
+    .newsletter-subtext {
+        color: #606060;
+        font-size: 16px;
+        margin-bottom: 25px;
+    }
+
+    .newsletter-form {
+        display: flex;
+        justify-content: center;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .newsletter-input-group {
+        position: relative;
+        flex-grow: 1;
+    }
+
+    .newsletter-input {
+        width: 100%;
+        padding: 10px 15px 10px 40px;
+        border: 1px solid #DEE2E7;
+        border-radius: 6px 0 0 6px;
+        outline: none;
+    }
+
+    .newsletter-input-group i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #8B96A5;
+    }
+
+    .btn-subscribe {
+        background-color: #127FFF;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 0 6px 6px 0;
+        font-weight: 500;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .btn-subscribe:hover {
+        background-color: #0067db;
+    }
+
+    /* Main Footer Styling */
+    .main-footer {
+        background-color: #fff;
+        padding: 60px 0;
+        color: #8B96A5;
+        font-size: 14px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .footer-logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .footer-logo img {
+        height: 30px;
+        margin-right: 10px;
+    }
+    .brand-name {
+        color: #0d6efd;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .footer-social-icons {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+    }
+    .footer-social-icons a {
+        color: #fff;
+        font-size: 16px;
+        background-color: #BDC4CD;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+    .footer-social-icons a:hover {
+        background-color: #0d6efd;
+    }
+
+    .footer-heading {
+        color: #1C1C1C;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .footer-links-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .footer-links-list li {
+        margin-bottom: 12px;
+    }
+    .footer-links-list a {
+        text-decoration: none;
+        color: #8B96A5;
+        transition: 0.3s;
+    }
+    .footer-links-list a:hover {
+        color: #0d6efd;
+    }
+
+    .get-app-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .app-button {
+        display: flex;
+        align-items: center;
+        background-color: #333;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        transition: 0.3s;
+        width: 170px;
+    }
+    .app-button:hover {
+        background-color: #222;
+    }
+    .app-button img {
+        height: 25px;
+        margin-right: 10px;
+    }
+    .app-button-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+    .app-small {
+        font-size: 10px;
+        color: #ccc;
+    }
+    .app-store-name {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* RFQ Section Container */
+    .rfq-section {
+        position: relative;
+        padding: 80px 0;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 40px;
+        background-color: #0d6efd;
+    }
+
+    .rfq-bg-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        opacity: 0.9;
+    }
+
+    .rfq-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #127FFF 0%, rgba(18, 127, 255, 0) 100%);
+        z-index: 2;
+    }
+
+    .rfq-content-wrapper {
+        position: relative;
+        z-index: 3;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .rfq-left-text {
+        color: #fff;
+        padding-right: 50px;
+    }
+    .rfq-left-text h2 {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .rfq-left-text p {
+        font-size: 16px;
+        color: rgba(255,255,255,0.8);
+        max-width: 450px;
+    }
+
+    .rfq-form-box {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .rfq-form-box h4 {
+        color: #1C1C1C;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .rfq-input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #DEE2E7;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        outline: none;
+    }
+
+    .rfq-textarea {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #DEE2E7;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        height: 100px;
+        resize: none;
+    }
+
+    .rfq-dual-inputs {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    .rfq-dual-inputs .rfq-input {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    .btn-rfq-send {
+        background-color: #127FFF;
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* Recommendation Items */
+    .recom-item {
+        border: 1px solid #eee;
+        padding: 15px;
+        border-radius: 8px;
+        transition: 0.3s;
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #fff;
+    }
+    .recom-item:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    /* Deals Section Container */
+.deals-container {
+    background-color: #fff;
+    border: 1px solid #7D48FB; /* Purple border jaisa picture mein hai */
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+/* Left side Timer Box */
+.timer-box {
+    padding: 20px;
+    border-right: 1px solid #eee;
+}
+
+/* Individual Deal Item */
+.deal-item {
+    border-right: 1px solid #eee;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease; /* Hover effect smooth karne ke liye */
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* HOVER EFFECT: Box thora oopar uthay ga aur shadow aayegi */
+.deal-item:hover {
+    background-color: #fff;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    z-index: 5;
+}
+
+.deal-item img {
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* Discount Badge */
+.discount-badge {
+    background-color: #FFE3E3;
+    color: #EB001B;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Countdown Timer circles */
+.timer-unit {
+    background: #606060;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 2px;
+    min-width: 40px;
+    display: inline-block;
+}
+</style>
+
+
+<div class="container mt-4">
+    <div class="row g-3">
+        
+        <div class="col-md-3">
+            <div class="list-group shadow-sm border-0" style="border-radius: 8px; overflow: hidden;">
+                <a href="#" class="list-group-item list-group-item-action active border-0" style="background-color: #E5F1FF; color: #1C1C1C; font-weight: 500;">Automobiles</a>
+                <a href="#" class="list-group-item list-group-item-action border-0 text-muted">Clothes and wear</a>
+                <a href="#" class="list-group-item list-group-item-action border-0 text-muted">Home interiors</a>
+                <a href="#" class="list-group-item list-group-item-action border-0 text-muted">Computer and tech</a>
+                <a href="#" class="list-group-item list-group-item-action border-0 text-muted">Tools, equipments</a>
+                <a href="#" class="list-group-item list-group-item-action border-0 text-muted">Sports and outdoor</a>
+                <a href="#" class="list-group-item list-group-item-action border-0 text-muted">Animal and pets</a>
+                <a href="#" class="list-group-item list-group-item-action border-0 text-muted">Machinery tools</a>
+                <a href="#" class="list-group-item list-group-item-action border-0 text-muted">More category</a>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="position-relative h-100 shadow-sm" style="border-radius: 8px; overflow: hidden; min-height: 380px;">
+                <img src="~/images/Image/backgrounds/Banner-board-800x420 2.png" alt="Electronics" style="width: 100%; height: 100%; object-fit: cover; position: absolute;">
+                
+                <div class="position-relative z-index-2 p-5">
+                    <h5 class="mb-1" style="font-weight: 400; color: #1C1C1C;">Latest trending</h5>
+                    <h2 class="fw-bold mb-4" style="color: #1C1C1C; font-size: 32px;">Electronic items</h2>
+                    <button class="btn btn-light fw-medium px-4 py-2" style="border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Learn more</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="d-flex flex-column gap-2 h-100">
+                
+                <div class="p-3 shadow-sm border-0" style="background-color: #E3F0FF; border-radius: 8px; flex: 2; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="mb-3">
+                        <span style="font-size: 15px; line-height: 1.2; color: #1C1C1C;">Hi, user <br><strong>let's get started</strong></span>
+                    </div>
+                    <button class="btn btn-primary w-100 mb-2 border-0" style="background-color: #0D6EFD; border-radius: 6px;">Join now</button>
+                    <button class="btn btn-light w-100 border-0" style="color: #0D6EFD; border-radius: 6px;">Log in</button>
+                </div>
+
+                <div class="p-2 shadow-sm text-white d-flex align-items-center justify-content-center text-center" style="background-color: #F38332; border-radius: 8px; flex: 1;">
+                    <p class="m-0" style="font-size: 14px; padding: 0 10px;">Get yourself $10 off with a new supplier</p>
+                </div>
+
+                <div class="p-2 shadow-sm text-white d-flex align-items-center justify-content-center text-center" style="background-color: #55BDC3; border-radius: 8px; flex: 1;">
+                    <p class="m-0" style="font-size: 14px; padding: 0 10px;">Send quotes with supplier preferences</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <div class="deals-container shadow-sm">
+        <div class="row g-0">
+            <div class="col-md-3 timer-box text-start">
+                <h5 class="fw-bold">Deals and offers</h5>
+                <p class="text-muted small">Hygiene equipments</p>
+                <div class="mt-3">
+                    <div class="timer-unit text-center">04 <br/><small>Days</small></div>
+                    <div class="timer-unit text-center">13 <br/><small>Hour</small></div>
+                    <div class="timer-unit text-center">34 <br/><small>Min</small></div>
+                    <div class="timer-unit text-center">56 <br/><small>Sec</small></div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row g-0 h-100">
+                    
+                    <div class="col">
+                        <a href="#" class="deal-item">
+                            <img src="/images/Image/tech/6.png" alt="Smart Watch">
+                            <p class="small text-dark mb-1">Smart watches</p>
+                            <span class="discount-badge">-25%</span>
+                        </a>
+                    </div>
+
+                    <div class="col">
+                        <a href="#" class="deal-item">
+                            <img src="/images/Image/tech/image 29.png" alt="Laptops">
+                            <p class="small text-dark mb-1">Laptops</p>
+                            <span class="discount-badge">-15%</span>
+                        </a>
+                    </div>
+
+                    <div class="col">
+                        <a href="#" class="deal-item">
+                            <img src="/images/Image/tech/image 23.png" alt="GoPro">
+                            <p class="small text-dark mb-1">GoPro cameras</p>
+                            <span class="discount-badge">-40%</span>
+                        </a>
+                    </div>
+
+                    <div class="col">
+                        <a href="#" class="deal-item">
+                            <img src="/images/Image/tech/8.png" alt="Headphones">
+                            <p class="small text-dark mb-1">Headphones</p>
+                            <span class="discount-badge">-25%</span>
+                        </a>
+                    </div>
+
+                    <div class="col">
+                        <a href="#" class="deal-item" style="border-right: none;">
+                            <img src="/images/Image/tech/image 29.png" alt="Canon">
+                            <p class="small text-dark mb-1">Canon cameras</p>
+                            <span class="discount-badge">-25%</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="row g-0">
+            <div class="col-md-3 banner-side">
+                <img src="/images/Image/backgrounds/image 98.png" class="cat-bg" alt="Tech Banner">
+                <div class="banner-text">
+                    <h4 class="fw-bold">Consumer <br />Electronics</h4>
+                    <button class="btn btn-light btn-sm w-50 mt-2">Source Now</button>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row g-0">
+                    <div class="col-md-3 col-3 grid-item">
+                        <div class="item-info">
+                            <span class="text-dark fw-medium">Smart Watch</span>
+                            <small class="text-muted">From USD 19</small>
+                        </div>
+                        <div class="item-img-container">
+                            <img src="/images/Image/\tech/8.png" alt="Tech 1">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-3 grid-item">
+                        <div class="item-info">
+                            <span class="text-dark fw-medium">Headphones</span>
+                            <small class="text-muted">From USD 19</small>
+                        </div>
+                        <div class="item-img-container">
+                            <img src="/images/Image/tech/image 29.png" alt="Tech 2">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-3 grid-item">
+                        <div class="item-info">
+                            <span class="text-dark fw-medium"> Camera</span>
+                            <small class="text-muted">From USD 19</small>
+                        </div>
+                        <div class="item-img-container">
+                            <img src="/images/Image/tech/6.png" alt="Tech 3">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-3 grid-item">
+                        <div class="item-info">
+                            <span class="text-dark fw-medium">Smartphone</span>
+                            <small class="text-muted">From USD 19</small>
+                        </div>
+                        <div class="item-img-container">
+                            <img src="/images/Image/tech/image 33.png" alt="Tech 4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="row g-0">
+            <div class="col-md-3 banner-side">
+                <img src="/images/Image/backgrounds/Group 969.png" class="cat-bg" alt="Interior Banner">
+                <div class="banner-text">
+                    <h4 class="fw-bold">Home & <br />Interior</h4>
+                    <button class="btn btn-light btn-sm w-50 mt-2">Source Now</button>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row g-0">
+                    <div class="col-md-3 col-3 grid-item">
+                        <div class="item-info">
+                            <span class="text-dark fw-medium">Soft Chair</span>
+                            <small class="text-muted">From USD 19</small>
+                        </div>
+                        <div class="item-img-container">
+                            <img src="/images/Image/interior/1.png" alt="Interior 1">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-3 grid-item">
+                        <div class="item-info">
+                            <span class="text-dark fw-medium">Table Lamp</span>
+                            <small class="text-muted">From USD 19</small>
+                        </div>
+                        <div class="item-img-container">
+                            <img src="/images/Image/interior/6.png" alt="Interior 2">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-3 grid-item">
+                        <div class="item-info">
+                            <span class="text-dark fw-medium">Kitchen Mixer</span>
+                            <small class="text-muted">From USD 100</small>
+                        </div>
+                        <div class="item-img-container">
+                            <img src="/images/Image/interior/8.png" alt="Interior 3">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-6 grid-item">
+                        <div class="item-info">
+                            <span class="text-dark fw-medium">Coffee Maker</span>
+                            <small class="text-muted">From USD 10</small>
+                        </div>
+                        <div class="item-img-container">
+                            <img src="/images/Image/interior/3.png" alt="Interior 4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="fw-bold mb-4 mt-5">Recommended Items</h3>
+    <div class="row row-cols-2 row-cols-md-4 g-3 mb-5">
+        
+        <div class="col">
+            <div class="recom-item text-center bg-white shadow-sm">
+                <img src="/images/Image/interior/3.png" class="img-fluid mx-auto mb-2" style="height:140px; width: 140px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/150'">
+                <h6 class="fw-bold mb-1">USD 12.00</h6>
+                <p class="text-muted small mb-0">Wooden Pot</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="recom-item text-center bg-white shadow-sm">
+                <img src="/images/Image/interior/6.png" class="img-fluid mx-auto mb-2" style="height:140px; width: 140px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/150'">
+                <h6 class="fw-bold mb-1">USD 45.00</h6>
+                <p class="text-muted small mb-0"> Designer Lamp</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="recom-item text-center bg-white shadow-sm">
+                <img src="/images/Image/tech/6.png" class="img-fluid mx-auto mb-2" style="height:140px; width: 140px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/150'">
+                <h6 class="fw-bold mb-1">USD 25.00</h6>
+                <p class="text-muted small mb-0">Digital Camera</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="recom-item text-center bg-white shadow-sm">
+                <img src="/images/Layout/alibaba/Image/cloth/Bitmap (2).png" class="img-fluid mx-auto mb-2" style="height:140px; width: 140px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/150'">
+                <h6 class="fw-bold mb-1">USD 120.00</h6>
+                <p class="text-muted small mb-0">Denim Shorts </p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="recom-item text-center bg-white shadow-sm">
+                <img src="/images/Layout/alibaba/Image/cloth/image 24.png" class="img-fluid mx-auto mb-2" style="height:140px; width: 140px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/150'">
+                <h6 class="fw-bold mb-1">USD 60.00</h6>
+                <p class="text-muted small mb-0">Blue Wallet</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="recom-item text-center bg-white shadow-sm">
+                <img src="/images/Image/interior/image 93.png" class="img-fluid mx-auto mb-2" style="height:140px; width: 140px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/150'">
+                <h6 class="fw-bold mb-1">USD 15.00</h6>
+                <p class="text-muted small mb-0">Swimming Pool</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="recom-item text-center bg-white shadow-sm">
+                <img src="/images/Layout/alibaba/Image/tech/image 85.png" class="img-fluid mx-auto mb-2" style="height:140px; width: 140px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/150'">
+                <h6 class="fw-bold mb-1">USD 300.00</h6>
+                <p class="text-muted small mb-0">Electric Kettle </p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="recom-item text-center bg-white shadow-sm">
+                <img src="~/images/Layout/alibaba/Image/tech/image 86.png" class="img-fluid mx-auto mb-2" style="height:140px; width: 140px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/150'">
+                <h6 class="fw-bold mb-1">USD 85.00</h6>
+                <p class="text-muted small mb-0">Head Phones</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="container mt-4">
+
+    <div class="rfq-section shadow-lg">
+        <img src="/images/Image/backgrounds/Group 982.png" class="rfq-bg-image" alt="RFQ Background">
+        
+        <div class="rfq-overlay"></div>
+
+        <div class="rfq-content-wrapper p-5">
+            
+            <div class="rfq-left-text">
+                <h2>An easy way to send requests to all suppliers</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+            </div>
+
+            <div class="rfq-form-box">
+                <h4>Send quote to suppliers</h4>
+                
+                <form>
+                    <input type="text" class="rfq-input" placeholder="What item you need?" required>
+                    
+                    <textarea class="rfq-textarea" placeholder="Type more details"></textarea>
+                    
+                    <div class="rfq-dual-inputs">
+                        <input type="text" class="rfq-input" placeholder="Quantity">
+                        <input type="text" class="rfq-input" placeholder="Pcs">
+                    </div>
+
+                    <button type="submit" class="btn-rfq-send">Send inquiry</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        <div class="container mt-5 mb-5">
+    
+    <h3 class="services-heading">OUR EXTRA SERVICES</h3>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        
+        <div class="col">
+            <a href="#" class="service-card">
+                <img src="/images/Image/backgrounds/Mask group.png" class="service-img" alt="Source Item" onerror="this.src='https://via.placeholder.com/200x120?text=Source+Picture'">
+                
+                <div class="service-card-body">
+                    <div class="service-icon-circle">
+                        <i class="fas fa-search"></i> </div>
+                    <p class="service-text text-start pe-5 flex-grow-1">Source from Industry Hubs</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="service-card">
+                <img src="/images/Image/backgrounds/Mask group (1).png" class="service-img" alt="Custom Item" onerror="this.src='https://via.placeholder.com/200x120?text=Custom+Picture'">
+                
+                <div class="service-card-body">
+                    <div class="service-icon-circle">
+                        <i class="fas fa-magic"></i> </div>
+                    <p class="service-text text-start pe-5 flex-grow-1">Customize Your Products</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="service-card">
+                <img src="/images/Image/backgrounds/image 106.png" class="service-img" alt="Shipping Item" onerror="this.src='https://via.placeholder.com/200x120?text=Shipping+Picture'">
+                
+                <div class="service-card-body">
+                    <div class="service-icon-circle">
+                        <i class="fas fa-plane"></i> </div>
+                    <p class="service-text text-start pe-5 flex-grow-1">Fast, reliable shipping by ocean or air</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="#" class="service-card">
+                <img src="/images/Image/backgrounds/image 107.png" class="service-img" alt="Monitoring Item" onerror="this.src='https://via.placeholder.com/200x120?text=Monitoring+Picture'">
+                
+                <div class="service-card-body">
+                    <div class="service-icon-circle">
+                        <i class="fas fa-shield-alt"></i> </div>
+                    <p class="service-text text-start pe-5 flex-grow-1">Product monitoring and inspection</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+<div class="container mb-5">
+    <h3 class="region-heading">Suppliers By Region</h3>
+    
+    <div class="row g-3">
+        <div class="col-md-3 col-6">
+            <a href="#" class="region-card">
+                <div class="region-img-box">
+                    <img src="/images/Layout1/Image/flags/AE@2x.png" alt="UAE" onerror="this.src='https://via.placeholder.com/40x30?text=Flag'">
+                </div>
+                <div class="region-info">
+                    <p class="region-name">Arabic Emirates</p>
+                    <span class="region-link">shopname.ae</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <a href="#" class="region-card">
+                <div class="region-img-box">
+                    <img src="/images/Layout1/Image/flags/DE@2x.png" alt="Australia" onerror="this.src='https://via.placeholder.com/40x30?text=Flag'">
+                </div>
+                <div class="region-info">
+                    <p class="region-name">Australia</p>
+                    <span class="region-link">shopname.ae</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <a href="#" class="region-card">
+                <div class="region-img-box">
+                    <img src="/images/Layout1/Image/flags/US@2x.png" alt="USA" onerror="this.src='https://via.placeholder.com/40x30?text=Flag'">
+                </div>
+                <div class="region-info">
+                    <p class="region-name">United States</p>
+                    <span class="region-link">shopname.ae</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <a href="#" class="region-card">
+                <div class="region-img-box">
+                    <img src="/images/Layout1/Image/flags/RU@2x.png" alt="Russia" onerror="this.src='https://via.placeholder.com/40x30?text=Flag'">
+                </div>
+                <div class="region-info">
+                    <p class="region-name">Russia</p>
+                    <span class="region-link">shopname.ae</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <a href="#" class="region-card">
+                <div class="region-img-box">
+                    <img src="/images/Layout1/Image/flags/IT@2x.png" alt="Italy" onerror="this.src='https://via.placeholder.com/40x30?text=Flag'">
+                </div>
+                <div class="region-info">
+                    <p class="region-name">Italy</p>
+                    <span class="region-link">shopname.ae</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="newsletter-section">
+    <div class="container">
+        <h3 class="newsletter-heading">Subscribe on our newsletter</h3>
+        
+        <p class="newsletter-subtext">Get daily news on upcoming offers from many suppliers all over the world!</p>
+
+        <form class="newsletter-form">
+            <div class="newsletter-input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" class="newsletter-input" placeholder="Email" required>
+            </div>
+            <button type="submit" class="btn-subscribe">Subscribe</button>
+        </form>
+    </div>
 </div>

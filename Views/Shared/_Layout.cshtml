@@ -3,53 +3,186 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/css/style.css" />
-    <title>@ViewData["Title"] - ecommerce_website</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ecommerce_website.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - Brand</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <header>
-        <header class="border-bottom bg-white">
-    <div class="container py-3">
-        <div class="row align-items-center">
-            
-            <div class="col-md-2">
-               <h2> AliBaba ecommers</h2>
-            </div>
-            
-            <div class="col-md-6">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search products...">
-                    <button class="btn btn-primary" type="button">Search</button>
+
+    <header class="main-header bg-white border-bottom py-3">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-6">
+                    <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center text-decoration-none">
+                        <img src="/images/Layout/Brand/logo-colored.png" alt="Brand Logo" style="height: 40px;">
+                        <span class="fs-4 fw-bold ms-2" style="color: #0D6EFD;"></span>
+                    </a>
+                </div>
+
+                <div class="col-md-7 col-12 my-2 my-md-0">
+                   <form asp-controller="Product" asp-action="Index" method="get">
+    <div class="input-group border rounded" style="border-color: #0D6EFD !important; overflow: hidden;">
+        
+        <input type="text" name="searchString" class="form-control border-0" placeholder="Search products..." style="box-shadow: none;">
+                         
+        <button class="btn btn-outline-secondary dropdown-toggle border-0 border-start bg-white" type="button" data-bs-toggle="dropdown">
+            All category
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Electronics</a></li>
+            <li><a class="dropdown-item" href="#">Interior</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Products</a>
+                                </li>
+     
+        </ul>
+                         
+        <button class="btn btn-primary px-4" type="submit">Search</button>
+    </div>
+                  </form>
+                </div>
+
+                <div class="col-md-3 col-6 text-end">
+                    <div class="d-flex justify-content-end gap-3">
+                        <div class="text-center" style="cursor: pointer;">
+                            <i class="fas fa-user text-secondary d-block fs-5"></i>
+                            <small class="text-muted" style="font-size: 11px;">Profile</small>
+                        </div>
+                        <div class="text-center" style="cursor: pointer;">
+                            <i class="fas fa-comment-dots text-secondary d-block fs-5"></i>
+                            <small class="text-muted" style="font-size: 11px;">Message</small>
+                        </div>
+                        <div class="text-center" style="cursor: pointer;">
+                            <i class="fas fa-heart text-secondary d-block fs-5"></i>
+                            <small class="text-muted" style="font-size: 11px;">Orders</small>
+                        </div>
+                        <div class="text-center" style="cursor: pointer;">
+                            <i class="fas fa-shopping-cart text-secondary d-block fs-5"></i>
+                            <small class="text-muted" style="font-size: 11px;">My cart</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="col-md-4 text-end">
-                <span class="me-3"><i class="fas fa-user"></i> Profile</span>
-                <span class="me-3"><i class="fas fa-box"></i> Orders</span>
-                <span><i class="fas fa-shopping-cart"></i> Cart (0)</span>
+        </div>
+    </header>
+
+    <nav class="nav-bar bg-white border-bottom py-2">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-4">
+                <a href="#" class="text-dark text-decoration-none fw-medium d-flex align-items-center">
+                    <i class="fas fa-bars me-2"></i> All category
+                </a>
+                <a asp-controller="Home" asp-action="Offers" class="text-dark text-decoration-none fw-medium">Hot offers</a>
+                <a href="#" class="text-dark text-decoration-none fw-medium">Gift boxes</a>
+                <a href="#" class="text-dark text-decoration-none fw-medium">Projects</a>
+                <a href="#" class="text-dark text-decoration-none fw-medium">Menu item</a>
+                <a asp-controller="Product" asp-action="Index" class="text-dark text-decoration-none fw-medium">Products</a>
+
+                <div class="dropdown">
+                    <a href="#" class="text-dark text-decoration-none fw-medium dropdown-toggle" data-bs-toggle="dropdown">Help</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="d-flex align-items-center gap-4">
+                <span class="fw-medium">English, USD</span>
+                <span class="fw-medium d-flex align-items-center">
+                    Ship to <img src="https://flagcdn.com/w20/de.png" alt="DE" class="ms-2" style="width: 20px;">
+                </span>
             </div>
         </div>
-    </div>
-</header>
-    </header>
+    </nav>
+    <main role="main" class="container-fluid py-4">
+        @RenderBody()
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<footer class="main-footer mt-auto">
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="row">
+            
+            <div class="col-md-3">
+                <div class="footer-logo">
+                    <img src="/images/Layout/\Brand/logo-colored.png" alt="Brand Logo">
+                    <span class="brand-name"></span>
+                </div>
+                <p class="text-secondary small">
+                    Best information about the company gies here but now lorem ipsum is.
+                </p>
+                <div class="footer-social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-2">
+                <h6 class="footer-heading">About</h6>
+                <ul class="footer-links-list">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Find store</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Blogs</a></li>
+                </ul>
+            </div>
+
+            <div class="col-6 col-md-2">
+                <h6 class="footer-heading">Partnership</h6>
+                <ul class="footer-links-list">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Find store</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Blogs</a></li>
+                </ul>
+            </div>
+
+            <div class="col-6 col-md-2">
+                <h6 class="footer-heading">Information</h6>
+                <ul class="footer-links-list">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Money Refund</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <h6 class="footer-heading">Get app</h6>
+                <div class="get-app-container">
+                    <a href="#" class="app-button mb-2">
+                        <img src="/images/Layout/Misc/market-button.png" alt="App Store">
+                        <div class="app-button-text">
+                            <span class="app-small">Download on the</span>
+                            <span class="app-store-name">App Store</span>
+                        </div>
+                    </a>
+                    <a href="#" class="app-button">
+                        <img src="/images/Layout/Misc/Group.png" alt="Play Store">
+                        <div class="app-button-text">
+                            <span class="app-small">GET IT ON</span>
+                            <span class="app-store-name">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ecommerce_website - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+</footer>
+    
+
 </body>
 </html>
